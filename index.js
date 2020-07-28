@@ -119,3 +119,20 @@ keys.addEventListener('click', (event) => {
     updateDisplay();
 
 });
+
+window.addEventListener('keypress', function(e) {
+    console.log(e)
+    const screen = document.querySelector('.calculator-screen');
+    screen.value = e.key;
+    calculator.displayValue = e.key;
+    const { keyboard } = e;
+
+    if (keyboard.classList.contains(107 || 109 || 106 || 111)) {
+        handleOperator(keyboard.value);
+        updateDisplay();
+        return;
+    }
+
+
+
+});
