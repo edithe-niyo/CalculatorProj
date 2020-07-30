@@ -82,7 +82,6 @@ function resetCalculator() {
     console.log(calculator);
 }
 
-
 function updateDisplay() {
     const display = document.querySelector('.calculator-screen');
     display.value = calculator.displayValue;
@@ -120,15 +119,30 @@ keys.addEventListener('click', (event) => {
 
 });
 
-window.addEventListener('keypress', function(e) {
-    console.log(e)
-    const screen = document.querySelector('.calculator-screen');
-    screen.value = e.key;
-    calculator.displayValue = e.key;
-    const { keyboard } = e;
+window.addEventListener('keypress', (event) => {
 
-    if (keyboard.classList.contains(107 || 109 || 106 || 111)) {
-        handleOperator(keyboard.value);
+    const { key } = event;
+
+    if (['+', '-', '*', '/', '='].includes(key)) {
+        handleOperator(key);
+        updateDisplay();
+        return;
+    }
+
+    if (['.', ','].includes(key)) {
+        inputDecimal('.');
+        updateDisplay();
+        return;
+    }
+
+    if (['c', 'C'].includes(key)) {
+        resetCalculator();
+        updateDisplay();
+        return;
+    }
+
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(key)) {
+        inputDigit(key);
         updateDisplay();
         return;
     }
