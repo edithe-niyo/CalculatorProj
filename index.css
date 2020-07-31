@@ -75,3 +75,15 @@ button:hover {
     padding: 20px;
     background-color: cadetblue;
 }
+
+.messageinv {
+    color: red;
+    text-align: center;
+}
+
+.buttoncolor {
+    opacity: 1;
+    color: black;
+    border: 1px solid #000;
+    background-color: #18777a;
+}

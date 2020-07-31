@@ -82,6 +82,24 @@ function resetCalculator() {
     console.log(calculator);
 }
 
+function invalidKey() {
+    var context = new AudioContext();
+    var osc440 = context.createOscillator();
+    osc440.frequency.value = 440;
+    osc440.connect(context.destination);
+    osc440.start();
+    osc440.stop(context.currentTime + 0.25);
+    document.getElementById("messageinv").textContent = "Invalid key";
+    setTimeout(() => (document.getElementById("messageinv").innerHTML = ""), 3000);
+}
+
+// function screenKeyboard() {
+//     if (window.addEventListener('keypress', (event))) {
+//         const keys = document.querySelector('.calculator-keys');
+//         keys.addEventListener('click', (event));
+//     }
+// }
+
 function updateDisplay() {
     const display = document.querySelector('.calculator-screen');
     display.value = calculator.displayValue;
@@ -120,8 +138,29 @@ keys.addEventListener('click', (event) => {
 });
 
 window.addEventListener('keypress', (event) => {
-
     const { key } = event;
+    let buttons = null
+
+    if (key) {
+        const value = document.querySelector('.calculator-screen');
+
+        const button = document.getElementsByTagName('button');
+        for (let i = 0; i < button.length; i++) {
+            if (button[i].getAttribute('value').toString() === key.toString()) {
+                buttons = button[i];
+            }
+        }
+
+        if (buttons) {
+            buttons.style.backgroundColor = "#18777a";
+            buttons.style.color = "black"
+            setTimeout(() => {
+                buttons.style.backgroundColor = "transparent";
+                buttons.style.color = "black";
+            }, 500);
+        }
+
+    }
 
     if (['+', '-', '*', '/', '='].includes(key)) {
         handleOperator(key);
@@ -146,7 +185,7 @@ window.addEventListener('keypress', (event) => {
         updateDisplay();
         return;
     }
-
+    invalidKey();
 
 
 });
